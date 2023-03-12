@@ -1,0 +1,15 @@
+{
+  "name": "revou-week9-example",
+  "version": "0.0.1",
+  "description": "RevoU Week 9 Assignment Example",
+  "main": "index.js",
+  "repository": "git@github.com:kevinasurjadi/revou-week9-example.git",
+  "author": "Kevin Alexander Surjadi",
+  "license": "MIT",
+  "scripts": {
+    "build": "cp ./src/index.html ./dist/index.html && cp ./src/books.html ./dist/books.html && cp ./src/information.html ./dist/information.html && npx tailwindcss -i ./src/input.css -o ./dist/output.css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.2.7"
+  }
+}
