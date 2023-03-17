@@ -12,29 +12,18 @@
 
         <link href="/dist/output.css" rel="stylesheet">
     </head>
-    <body>
+    <body onload="loadLibrary()">
         <div class="flex flex-col h-screen">
             <header>
                 <nav class="bg-gray-800">
                     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
                         <div class="relative flex h-16 items-center justify-between">
                             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-                                <!-- Mobile menu button-->
                                 <button id="m-menu-button" type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false" onclick="toggleMobileMenu()">
                                     <span class="sr-only">Open main menu</span>
-                                    <!--
-                                        Icon when menu is closed.
-                            
-                                        Menu open: "hidden", Menu closed: "block"
-                                    -->
                                     <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                                     </svg>
-                                    <!--
-                                        Icon when menu is open.
-                            
-                                        Menu open: "block", Menu closed: "hidden"
-                                    -->
                                     <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                     </svg>
@@ -59,10 +48,8 @@
                         </div>
                     </div>
                   
-                    <!-- Mobile menu, show/hide based on menu state. -->
                     <div class="sm:hidden hidden" id="m-menu">
                         <div class="space-y-1 px-2 pt-2 pb-3">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="index.html" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Library</a>
                   
                             <a href="books.html" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Books</a>
@@ -76,37 +63,19 @@
                 <div class="flex flex-col items-center py-3 px-4 sm:px-8">
                     <div class="container mx-auto my-3 max-w-screen-md px-4 py-8 sm:px-6 lg:px-8 bg-gray-800 rounded-lg">
                         <h3 class="text-white text-center mb-4">Welcome to RevoU Library! Use this search to find books quickly!</h3>
-                        <form>
+                        <form id="search-form">
                             <label for="search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                     <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                 </div>
-                                <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
+                                <input type="search" id="search" class="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search">
                                 <button type="submit" class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
                             </div>
                         </form>
                     </div>  
 
-                    <div class="container mx-auto my-3 max-w-screen-md sm:px-6 lg:px-8 bg-gray-800 rounded-lg py-8">
-                        <div class="text-center">
-                            <nav aria-label="Page navigation example">
-                                <ul class="inline-flex -space-x-px">
-                                    <li>
-                                        <a href="#" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                    <div id="search-result" class="container mx-auto my-3 max-w-screen-md sm:px-6 lg:px-8 bg-gray-800 rounded-lg py-4 hidden">
                         <div class="my-6">
                             <a href="#" class="flex flex-col items-center bg-white border border-gray-200 p-4 shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                                 <img class="object-cover w-full rounded-lg h-96 md:h-auto md:w-24" src="https://covers.openlibrary.org/b/id/10587033-L.jpg" alt="The Lord of the Rings: The Fellowship of the Ring">
@@ -132,24 +101,6 @@
                                     <caption>Subjects: Ents, Orcs, hobbits, magic, Ficción fantástica inglesa</caption>
                                 </div>
                             </a>
-                        </div>
-                        <div class="text-center">
-                            <nav aria-label="Page navigation example" class="mb-4">
-                                <ul class="inline-flex -space-x-px">
-                                    <li>
-                                        <a href="#" class="px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
