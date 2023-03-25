@@ -7,13 +7,12 @@
   "author": "Kevin Alexander Surjadi",
   "license": "MIT",
   "scripts": {
-    "copy-data": "cp ./src/data.json ./dist/data.json",
-    "copy-html": "cp ./src/index.html ./dist/index.html && cp ./src/books.html ./dist/books.html && cp ./src/information.html ./dist/information.html",
-    "build-tailwind": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify",
-    "uglify": "uglifyjs --compress --mangle --mangle-props --source-map --output dist/app.js -- src/app.js",
-    "build": "yarn copy-data && yarn copy-html && yarn build-tailwind && yarn uglify"
+    "tailwind:watch": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "tailwind:build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "lint": "npx prettier --write ."
   },
   "devDependencies": {
+    "prettier": "^2.8.7",
     "tailwindcss": "^3.2.7",
     "uglify-js": "^3.17.4"
   }

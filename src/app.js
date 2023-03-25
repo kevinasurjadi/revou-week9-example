@@ -1,189 +1,202 @@
 function toggleMobileMenu() {
-    let mobileMenuButton = document.getElementById('m-menu-button');
-    let mobileMenu = document.getElementById('m-menu')
-    if (mobileMenuButton.children[1].classList.contains('block')) {
-        mobileMenuButton.children[1].classList.replace('block', 'hidden');
-        mobileMenuButton.children[2].classList.replace('hidden', 'block');
-        mobileMenu.classList.replace('hidden', 'block');
-    } else {
-        mobileMenuButton.children[1].classList.replace('hidden', 'block');
-        mobileMenuButton.children[2].classList.replace('block', 'hidden');
-        mobileMenu.classList.replace('block', 'hidden');
-    }
+  let mobileMenuButton = document.getElementById('m-menu-button');
+  let mobileMenu = document.getElementById('m-menu');
+  if (mobileMenuButton.children[1].classList.contains('block')) {
+    mobileMenuButton.children[1].classList.replace('block', 'hidden');
+    mobileMenuButton.children[2].classList.replace('hidden', 'block');
+    mobileMenu.classList.replace('hidden', 'block');
+  } else {
+    mobileMenuButton.children[1].classList.replace('hidden', 'block');
+    mobileMenuButton.children[2].classList.replace('block', 'hidden');
+    mobileMenu.classList.replace('block', 'hidden');
+  }
 }
 
 function loadLibrary() {
-    let searchForm = document.getElementById('search-form');
-    searchForm.addEventListener('submit', searchLibrary);
+  let searchForm = document.getElementById('search-form');
+  searchForm.addEventListener('submit', searchLibrary);
 }
 
 function searchLibrary(event) {
-    event.preventDefault();
-    let searchInput = document.getElementById('search');
-    let query = searchInput.value;
+  event.preventDefault();
+  let searchInput = document.getElementById('search');
+  let query = searchInput.value;
 
-    let searchResult = document.getElementById('search-result');
-    searchResult.innerHTML = '';
+  let searchResult = document.getElementById('search-result');
+  searchResult.innerHTML = '';
 
-    let wrapper = document.createElement('div');
-    wrapper.className = 'my-6';
-    
-    if (query && query != '') {
-        searchResult.classList.remove('hidden');
-        fetch('./data.json')
-            .then(response => response.json())
-            .then(json => {
-                let books = json['books'];
-                console.log(books);
-                let filteredBooks = books.filter((book) => book['title'].toLowerCase().includes(query) || book['authors'].join(', ').toLowerCase().includes(query) || book['subjects'].join(', ').toLowerCase().includes(query));
-                if (filteredBooks.length > 0) {
-                    filteredBooks.forEach((book) => {
-                        let a = document.createElement('a');
-                        a.href = '#';
-                        a.className = 'flex flex-col items-center bg-white border border-gray-200 p-4 shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700';
+  let wrapper = document.createElement('div');
+  wrapper.className = 'my-6';
 
-                        let img = document.createElement('img');
-                        img.className = 'object-cover w-full rounded-lg h-96 md:h-auto md:w-24';
-                        img.src = book['image'];
-                        img.alt = book['title'];
+  if (query && query != '') {
+    searchResult.classList.remove('hidden');
+    fetch('./data.json')
+      .then((response) => response.json())
+      .then((json) => {
+        let books = json['books'];
+        console.log(books);
+        let filteredBooks = books.filter(
+          (book) =>
+            book['title'].toLowerCase().includes(query) ||
+            book['authors'].join(', ').toLowerCase().includes(query) ||
+            book['subjects'].join(', ').toLowerCase().includes(query)
+        );
+        if (filteredBooks.length > 0) {
+          filteredBooks.forEach((book) => {
+            let a = document.createElement('a');
+            a.href = '#';
+            a.className =
+              'flex flex-col items-center bg-white border border-gray-200 p-4 shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700';
 
-                        let div = document.createElement('div');
-                        div.className = 'flex flex-col justify-between p-4 leading-normal text-gray-400';
+            let img = document.createElement('img');
+            img.className =
+              'object-cover w-full rounded-lg h-96 md:h-auto md:w-24';
+            img.src = book['image'];
+            img.alt = book['title'];
 
-                        let h5 = document.createElement('h5');
-                        h5.className = 'mb-2 text-2xl font-bold tracking-tight';
-                        h5.innerHTML = book['title'];
+            let div = document.createElement('div');
+            div.className =
+              'flex flex-col justify-between p-4 leading-normal text-gray-400';
 
-                        let p = document.createElement('p');
-                        p.className = 'mb-3 font-normal';
+            let h5 = document.createElement('h5');
+            h5.className = 'mb-2 text-2xl font-bold tracking-tight';
+            h5.innerHTML = book['title'];
 
-                        let b = document.createElement('b');
-                        b.innerHTML = 'Author(s): ';
+            let p = document.createElement('p');
+            p.className = 'mb-3 font-normal';
 
-                        let authors = document.createTextNode(book['authors'].join(', '));
+            let b = document.createElement('b');
+            b.innerHTML = 'Author(s): ';
 
-                        p.appendChild(b);
-                        p.appendChild(authors);
+            let authors = document.createTextNode(book['authors'].join(', '));
 
-                        let caption = document.createElement('caption');
-                        caption.innerHTML = book['subjects'].join(', ');
+            p.appendChild(b);
+            p.appendChild(authors);
 
-                        div.appendChild(h5);
-                        div.appendChild(b);
-                        div.appendChild(caption);
+            let caption = document.createElement('caption');
+            caption.innerHTML = book['subjects'].join(', ');
 
-                        a.appendChild(img);
-                        a.appendChild(div);
+            div.appendChild(h5);
+            div.appendChild(b);
+            div.appendChild(caption);
 
-                        wrapper.appendChild(a);
-                    });
-                    searchResult.appendChild(wrapper);
-                } else {
-                    let center = document.createElement('center');
+            a.appendChild(img);
+            a.appendChild(div);
 
-                    let h1 = document.createElement('h1');
-                    h1.className = 'text-gray-400';
-                    h1.innerHTML = 'No books found, please try with another keyword';
+            wrapper.appendChild(a);
+          });
+          searchResult.appendChild(wrapper);
+        } else {
+          let center = document.createElement('center');
 
-                    center.appendChild(h1);
+          let h1 = document.createElement('h1');
+          h1.className = 'text-gray-400';
+          h1.innerHTML = 'No books found, please try with another keyword';
 
-                    searchResult.appendChild(center);
-                }
-            });
-    } else {
-        searchResult.classList.add('hidden');
-    }
+          center.appendChild(h1);
+
+          searchResult.appendChild(center);
+        }
+      });
+  } else {
+    searchResult.classList.add('hidden');
+  }
 }
 
 function loadBooks() {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
-    let page = urlParams.get('page');
+  let page = urlParams.get('page');
 
-    if (!page) {
-        page = 1;
-    } else {
-        page = Number(page);
-    }
+  if (!page) {
+    page = 1;
+  } else {
+    page = Number(page);
+  }
 
-    const booksPerPage = 12;
-    let bookGrid = document.getElementById('book-grid');
-    bookGrid.innerHTML = '';
-    fetch('./data.json')
-        .then((response) => response.json())
-        .then((json) => {
-            let books = json['books'].slice((page - 1) * booksPerPage, page * booksPerPage);
-            books.forEach(book => {
-                let outerDiv = document.createElement('div');
-                outerDiv.className = 'w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700';
-                
-                let aImg = document.createElement('a');
-                aImg.href = '#';
+  const booksPerPage = 12;
+  let bookGrid = document.getElementById('book-grid');
+  bookGrid.innerHTML = '';
+  fetch('./data.json')
+    .then((response) => response.json())
+    .then((json) => {
+      let books = json['books'].slice(
+        (page - 1) * booksPerPage,
+        page * booksPerPage
+      );
+      books.forEach((book) => {
+        let outerDiv = document.createElement('div');
+        outerDiv.className =
+          'w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700';
 
-                let img = document.createElement('img');
-                img.className = 'h-72 mx-auto';
-                img.src = book['image'];
-                img.alt = book['title'];
+        let aImg = document.createElement('a');
+        aImg.href = '#';
 
-                aImg.appendChild(img);
+        let img = document.createElement('img');
+        img.className = 'h-72 mx-auto';
+        img.src = book['image'];
+        img.alt = book['title'];
 
-                let innerDiv = document.createElement('div');
-                innerDiv.className = 'p-5';
+        aImg.appendChild(img);
 
-                let aH5 = document.createElement('a');
-                aH5.href = '#';
+        let innerDiv = document.createElement('div');
+        innerDiv.className = 'p-5';
 
-                let h5 = document.createElement('h5');
-                h5.className = 'mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white';
-                h5.innerHTML = book['title'];
+        let aH5 = document.createElement('a');
+        aH5.href = '#';
 
-                aH5.appendChild(h5);
+        let h5 = document.createElement('h5');
+        h5.className =
+          'mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white';
+        h5.innerHTML = book['title'];
 
-                let p = document.createElement('p');
-                p.className = 'mb-3 font-normal text-gray-700 dark:text-gray-400';
+        aH5.appendChild(h5);
 
-                let b = document.createElement('b');
-                b.innerHTML = 'Author(s): ';
+        let p = document.createElement('p');
+        p.className = 'mb-3 font-normal text-gray-700 dark:text-gray-400';
 
-                var author = document.createTextNode(book['authors'].join(', '));
+        let b = document.createElement('b');
+        b.innerHTML = 'Author(s): ';
 
-                p.appendChild(b);
-                p.appendChild(author);
+        var author = document.createTextNode(book['authors'].join(', '));
 
-                innerDiv.appendChild(aH5);
-                innerDiv.appendChild(p);
+        p.appendChild(b);
+        p.appendChild(author);
 
-                outerDiv.appendChild(aImg);
-                outerDiv.appendChild(innerDiv);
+        innerDiv.appendChild(aH5);
+        innerDiv.appendChild(p);
 
-                bookGrid.appendChild(outerDiv);
-            });
-        });
+        outerDiv.appendChild(aImg);
+        outerDiv.appendChild(innerDiv);
+
+        bookGrid.appendChild(outerDiv);
+      });
+    });
 }
 
 function previousBooksPage() {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
-    let page = urlParams.get('page');
+  let page = urlParams.get('page');
 
-    if (page && page == '2') {
-        window.location.replace('?page=1');
-    } else {
-        window.location.reload();
-    }
+  if (page && page == '2') {
+    window.location.replace('?page=1');
+  } else {
+    window.location.reload();
+  }
 }
 
 function nextBooksPage() {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
 
-    let page = urlParams.get('page');
+  let page = urlParams.get('page');
 
-    if (page && page == '1') {
-        window.location.replace('?page=2');
-    } else {
-        window.location.reload();
-    }
+  if (page && page == '1') {
+    window.location.replace('?page=2');
+  } else {
+    window.location.reload();
+  }
 }
